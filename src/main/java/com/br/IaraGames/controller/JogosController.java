@@ -3,7 +3,6 @@ package com.br.IaraGames.controller;
 import com.br.IaraGames.beans.Jogos;
 import com.br.IaraGames.beans.Fabricante;
 import com.br.IaraGames.beans.Categoria;
-import com.br.IaraGames.beans.Usuario;
 import com.br.IaraGames.dao.JogosDao;
 import com.br.IaraGames.dao.FabricanteDao;
 import com.br.IaraGames.dao.CategoriaDao;
@@ -103,6 +102,18 @@ public class JogosController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    // Novo endpoint para listar jogos populares
+    @GetMapping("/populares")
+    public List<Jogos> getJogosPopulares() {
+        return jogosDao.findByPopularTrue();
+    }
+
+    // Novo endpoint para listar jogos de lançamento
+    @GetMapping("/lancamentos")
+    public List<Jogos> getJogosLancamentos() {
+        return jogosDao.findByLancamentoTrue();
     }
 }
 
