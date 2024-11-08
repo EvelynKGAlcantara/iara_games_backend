@@ -44,24 +44,24 @@ public ResponseEntity<Fabricante> getFabricanteById(@PathVariable Integer id) {
 
 @PutMapping("/{id}")
 public ResponseEntity<Fabricante> atualizarFabricante(@PathVariable Integer id, @RequestBody Fabricante fabricante) {
-    // Verifica se o fabricante com o ID informado existe
+
     if (fabricanteDao.existsById(id)) {
-        fabricante.setId(id); // Define o ID para garantir que estamos atualizando o fabricante correto
+        fabricante.setId(id); 
         Fabricante fabricanteAtualizado = fabricanteDao.save(fabricante);
         return ResponseEntity.ok(fabricanteAtualizado);
     } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 se o fabricante não for encontrado
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
     }
 }
 
 @DeleteMapping("/{id}")
 public ResponseEntity<Void> deletarFabricante(@PathVariable Integer id) {
-    // Verifica se o fabricante com o ID informado existe
+
     if (fabricanteDao.existsById(id)) {
-        fabricanteDao.deleteById(id); // Deleta o fabricante
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Retorna 204 (No Content) após excluir
+        fabricanteDao.deleteById(id); 
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
     } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 se o fabricante não for encontrado
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
     }
 }
 

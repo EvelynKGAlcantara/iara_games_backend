@@ -6,7 +6,6 @@ import com.br.IaraGames.beans.Categoria;
 import com.br.IaraGames.dao.JogosDao;
 import com.br.IaraGames.dao.FabricanteDao;
 import com.br.IaraGames.dao.CategoriaDao;
-import com.br.IaraGames.dao.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +28,6 @@ public class JogosController {
 
     @Autowired
     private CategoriaDao categoriaDao;
-
-    @Autowired
-    private UsuarioDao usuarioDao;
 
     @GetMapping
     public List<Jogos> getAllJogos() {
@@ -59,7 +55,7 @@ public class JogosController {
 
     @PostMapping
     public ResponseEntity<Jogos> criarJogos(@RequestBody Jogos jogos) {
-        // Verifica se o fabricante, a categoria e o usuário existem
+
         Optional<Fabricante> fabricante = fabricanteDao.findById(jogos.getFabricante().getId());
         Optional<Categoria> categoria = categoriaDao.findById(jogos.getCategoria().getId());
 
@@ -76,7 +72,7 @@ public class JogosController {
     @PutMapping("/{id}")
     public ResponseEntity<Jogos> atualizarJogos(@PathVariable Integer id, @RequestBody Jogos jogos) {
         if (jogosDao.existsById(id)) {
-            // Verifica se o fabricante, a categoria e o usuário existem
+
             Optional<Fabricante> fabricante = fabricanteDao.findById(jogos.getFabricante().getId());
             Optional<Categoria> categoria = categoriaDao.findById(jogos.getCategoria().getId());
 
@@ -104,13 +100,11 @@ public class JogosController {
         }
     }
 
-    // Novo endpoint para listar jogos populares
     @GetMapping("/populares")
     public List<Jogos> getJogosPopulares() {
         return jogosDao.findByPopularTrue();
     }
 
-    // Novo endpoint para listar jogos de lançamento
     @GetMapping("/lancamentos")
     public List<Jogos> getJogosLancamentos() {
         return jogosDao.findByLancamentoTrue();

@@ -13,7 +13,6 @@ public class Categoria {
     @Column(length = 50, nullable = false)
     private String nome;
 
-    // Getters and Setters
     public Integer getId() {
         return id;
     }

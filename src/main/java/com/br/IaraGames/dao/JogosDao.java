@@ -14,7 +14,6 @@ public interface JogosDao extends CrudRepository<Jogos, Integer> {
     Optional<Jogos> findByPlataforma(String plataforma);
     Optional<Jogos> findByFabricanteNome(String fabricanteNome);
 
-    // Novos métodos para filtrar jogos populares e de lançamento
     List<Jogos> findByPopularTrue();
     List<Jogos> findByLancamentoTrue();
 }

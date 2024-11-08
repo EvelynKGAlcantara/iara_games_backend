@@ -15,20 +15,17 @@ public class CategoriaController {
     @Autowired
     private CategoriaDao categoriaDao;
 
-    // Método POST para criar uma nova categoria
     @PostMapping
     public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
         Categoria novaCategoria = categoriaDao.save(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
     }
 
-    // Método GET para listar todas as categorias
     @GetMapping
     public Iterable<Categoria> listarCategorias() {
         return categoriaDao.findAll();
     }
 
-    // Método GET para buscar uma categoria pelo ID
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> getCategoriaById(@PathVariable Integer id) {
         return categoriaDao.findById(id)
@@ -36,28 +33,24 @@ public class CategoriaController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // Método PUT para atualizar uma categoria existente
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
-        // Verifica se a categoria com o ID informado existe
         if (categoriaDao.existsById(id)) {
-            categoria.setId(id); // Define o ID para garantir que estamos atualizando a categoria correta
+            categoria.setId(id); 
             Categoria categoriaAtualizada = categoriaDao.save(categoria);
             return ResponseEntity.ok(categoriaAtualizada);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 se a categoria não for encontrada
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
         }
     }
 
-    // Método DELETE para excluir uma categoria
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCategoria(@PathVariable Integer id) {
-        // Verifica se a categoria com o ID informado existe
         if (categoriaDao.existsById(id)) {
-            categoriaDao.deleteById(id); // Deleta a categoria
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Retorna 204 (No Content) após excluir
+            categoriaDao.deleteById(id); 
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 se a categoria não for encontrada
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
         }
     }
 }

@@ -49,7 +49,6 @@ public class Jogos {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String descricao;
 
-    // Getters e Setters para todos os atributos
     public Integer getId() { 
         return id; 
     }

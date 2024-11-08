@@ -29,12 +29,10 @@ public class Compra {
     @Column(name = "data_compra", nullable = false)
     private LocalDate dataCompra;
 
-    // Relacionamento com a tabela Jogos
     @ManyToOne
     @JoinColumn(name = "jogo_id", nullable = false)
     private Jogos jogo;
 
-    // Getters e Setters
 
     public Integer getId() { 
         return id; 

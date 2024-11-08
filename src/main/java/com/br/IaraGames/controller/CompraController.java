@@ -18,26 +18,21 @@ import java.util.Map;
 public class CompraController {
 
     @Autowired
-    private CompraDao compraDao; // Agora o compraDao está corretamente anotado com @Autowired
+    private CompraDao compraDao; 
 
     @Autowired
     private JogosDao jogosDao;
 
     @PostMapping
     public ResponseEntity<Map<String, String>> processarCompra(@RequestBody Compra compra) {
-        // Buscar o jogo pelo ID
         Jogos jogo = jogosDao.findById(compra.getJogo().getId()).orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
 
-        // Definir o valor da compra de acordo com o preço do jogo
         compra.setValor(jogo.getPreco());
 
-        // Definindo a data da compra como a data atual
         compra.setDataCompra(LocalDate.now());
 
-        // Salvando a compra no banco de dados
         compraDao.save(compra);
 
-        // Resposta de sucesso
         Map<String, String> response = new HashMap<>();
         response.put("mensagem", "Compra realizada com sucesso!");
 

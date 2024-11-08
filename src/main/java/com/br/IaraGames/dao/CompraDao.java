@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompraDao extends JpaRepository<Compra, Integer> {
-    // Não é necessário implementar métodos adicionais neste momento
 }
