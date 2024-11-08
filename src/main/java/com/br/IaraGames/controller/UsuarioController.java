@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +20,22 @@ public class UsuarioController {
     private UsuarioDao usuarioDao;
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Usuario usuario) {
         Optional<Usuario> foundUser = usuarioDao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
-        return foundUser.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+        if (foundUser.isPresent()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensagem", "Login realizado com sucesso!");
+            response.put("usuario", foundUser.get()); 
+            
+            return ResponseEntity.ok(response);
+        } else {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensagem", "Usuário ou senha inválidos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        }
     }
+
 
     @GetMapping
     public Iterable<Usuario> getAllUsuarios() {
@@ -38,7 +51,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         if (usuarioDao.existsById(id)) {
-            usuario.setId(id); // Garante que o ID do usuário está correto
+            usuario.setId(id); 
             Usuario updatedUsuario = usuarioDao.save(usuario);
             return ResponseEntity.ok(updatedUsuario);
         } else {

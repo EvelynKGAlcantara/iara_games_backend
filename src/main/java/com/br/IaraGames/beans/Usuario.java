@@ -20,8 +20,6 @@ public class Usuario {
     private String senha;
 
 
-
-    // Getters and Setters
     public Integer getId() {
         return id;
     }
