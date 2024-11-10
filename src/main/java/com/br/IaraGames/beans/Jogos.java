@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "tb_jogos")
 public class Jogos {
@@ -44,6 +46,7 @@ public class Jogos {
     private BigDecimal preco;
 
     @Column(name = "data_lancamento", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataLancamento;
 
     @Column(columnDefinition = "TEXT", nullable = false)
